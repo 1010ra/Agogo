@@ -36,10 +36,10 @@ btn1.addEventListener('click', function (event) {
 });
 
 const btn2 = document.getElementById('bot');
-const timerElements = document.getElementById("timer")
+// const timerElements = document.getElementById("timer")
 
 btn2.addEventListener('click', function (event) {
-  timerElements.innerText = ""
+  timerElement.innerText = ""
   timerElement.style.display = 'block';
   beBack.style.display = 'block';
 
@@ -183,7 +183,10 @@ inputMinutes.addEventListener('keyup', function (event) {
   beBack.style.display = 'block';
 
   const departMinutes = inputMinutes.value;
-  let temps = departMinutes * 60
+  if (inputMinutes.value == ''|| inputMinutes.value <= 0  ) {
+    alert('veuillez entrer un nombre positif');
+  }else{
+    let temps = departMinutes * 60
   back(inputMinutes.value);
 
   if (interval != null) {
@@ -208,6 +211,7 @@ inputMinutes.addEventListener('keyup', function (event) {
     beBack.style.display = 'none';
 
   }
+  }
  
 });
 
@@ -226,12 +230,13 @@ function back(t) {
   let minutes = parseInt(temps / 60, 10)
   let secondes = parseInt(temps % 60, 10)
   let heures = parseInt(temps / 3600, 10)
+  
+  debut.setHours(debut.getHours()+heures);
+  debut.setMinutes(debut.getMinutes()+minutes);
+  debut.setSeconds(debut.getSeconds()+secondes);
    
- debut.setHours(debut.getHours()+heures);
- debut.setMinutes(debut.getMinutes()+minutes)
- debut.setSeconds(debut.getSeconds()+secondes)
 
-  beBack.innerHTML = `Be Back At:${debut.getHours()}:${debut.getMinutes()}:${debut.getSeconds()}`;
+  beBack.innerHTML = `Be Back At:${debut.getHours() < 10 ? "0" + debut.getHours() : debut.getHours()}:${debut.getMinutes() < 10 ? "0" + debut.getMinutes() : debut.getMinutes()}:${debut.getSeconds() < 10 ? "0" + debut.getSeconds() : debut.getSeconds()}`;
  
 }
 
